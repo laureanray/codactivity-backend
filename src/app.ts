@@ -1,26 +1,13 @@
 import express from 'express'
-import {Sequelize} from 'sequelize';
-import {MYSQL_URI} from './utils/secrets';
-
-
-// Database Connection
-const sequelize = new Sequelize(MYSQL_URI || '',
-    {
-        pool: {
-            max: 5,
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
-    });
-
-sequelize
-    .authenticate()
-    .then(r => console.log('Success'))
-    .catch(e => console.log(e))
-
+import * as user from './routes/v1/user';
 const app = express();
-app.set('port', process.env.PORT || 3000);
 
+app.set('port', process.env.PORT || 3000);
+app.get('/', (req, res, next) => {
+    console.log('test');
+})
+
+
+app.get('/user', user.login)
 
 export default app;
